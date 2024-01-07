@@ -1,7 +1,7 @@
 import os
 from airflow.providers.sqlite.hooks.sqlite import SqliteHook
-from src.io_utils import read_json
-from src.constants import OUTPUT_DIR_TRANSFORMED, DB_PATH
+from io_utils import read_json
+from constants import OUTPUT_DIR_TRANSFORMED, DB_PATH
 
 def load_data(sqlite_hook: SqliteHook):
     json_files = os.listdir(OUTPUT_DIR_TRANSFORMED)

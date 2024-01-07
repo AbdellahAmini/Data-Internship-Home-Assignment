@@ -1,7 +1,7 @@
-import src.io_utils as my_io
+import io_utils as my_io
 
-from src.processing_utils import transform_data
-from src.constants import OUTPUT_DIR_EXTRACTED, OUTPUT_DIR_TRANSFORMED
+from processing_utils import transform_data
+from constants import OUTPUT_DIR_EXTRACTED, OUTPUT_DIR_TRANSFORMED
 
 def transform_data():
         # Sort files in the directory OUTPUT_DIR_EXTRACTED using a natural sorting key

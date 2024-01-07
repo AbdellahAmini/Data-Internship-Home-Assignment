@@ -1,7 +1,7 @@
 import pandas as pd
-from src.constants import FILE_PATH, OUTPUT_DIR_EXTRACTED
+from constants import FILE_PATH, OUTPUT_DIR_EXTRACTED
 
-from src.io_utils import write_txt, create_file_dir
+from io_utils import write_txt, create_file_dir
 
 def extract_data():
     #added index_col=0 to drop the index column
