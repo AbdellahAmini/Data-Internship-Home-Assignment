@@ -1,3 +1,37 @@
+import re
+from bs4 import BeautifulSoup
+
+def clean_job_description(job_description: str) -> str:
+    """
+    Cleans job description by removing the present html elements, and separates
+    by a space each paragraph separated by a <br> tag.
+    
+    Args:
+        job_description: the raw description of the job
+
+    Returns:
+        str: the clean version of job_description
+    """
+    if job_description:
+        # Utilisation de BeautifulSoup pour extraire le texte
+        clean_text = BeautifulSoup(job_description, "html.parser").text
+
+        # Remplacement des entités HTML
+        clean_text = clean_text.replace("&lt;", "<").replace("&gt;", ">").replace("&nbsp;", " ")
+
+        # Suppression des balises HTML restantes
+        pattern = re.compile(r"<.*?>")
+        clean_text = re.sub(pattern, "", clean_text)
+
+        # Split et rejointure des éléments pour gérer les <br>
+        clean_text = clean_text.split("<br>")
+        clean_text = [item.strip() for item in clean_text if item.strip()]
+        clean_text = "\n".join(clean_text)
+
+        return clean_text
+
+    return job_description  # Retourne le texte original si job_description est None ou vide
+
 def get_salary(data_dict: dict) -> dict:
     """
     Processes salary information from a JSON file.
@@ -45,11 +79,17 @@ def get_seniority(job_title: str) -> str:
     Returns:
         str: The seniority level ('Senior' or 'Junior').
     """
-    # assume seniority_level is junior
-    seniority_level = "Junior"
-    if "senior" in job_title.lower():
+    if job_title is None:
+        seniority_level = "NA"
+
+    elif "senior" in job_title.lower():
         seniority_level = "Senior"
 
+    elif "junior" in job_title.lower():
+        seniority_level = "Junior"
+
+    else:
+        seniority_level = "NA"
     return seniority_level
 
 def transform_data(data_dict: dict) -> dict:
@@ -68,7 +108,7 @@ def transform_data(data_dict: dict) -> dict:
         "job": {
             "title": job_title,
             "industry": data_dict.get("industry", None),
-            "description": data_dict.get("description", None),
+            "description": clean_job_description(data_dict.get("description", None)),
             "employment_type": data_dict.get("employmentType", None),
             "date_posted": data_dict.get("datePosted", None),
         },
@@ -94,4 +134,3 @@ def transform_data(data_dict: dict) -> dict:
             "longitude": data_dict.get("jobLocation", {}).get("longitude", None),
         }
     }
-    

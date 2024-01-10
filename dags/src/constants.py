@@ -1,11 +1,11 @@
 from dotenv import load_dotenv
 from os import getenv
-from io_utils import add_cwd_to_file_path
+import src.io_utils as io_utils
 
 # envrionment variables
 load_dotenv()
-FILE_PATH = add_cwd_to_file_path(getenv("FILE_PATH"))
+FILE_PATH = io_utils.add_cwd_to_file_path(getenv("FILE_PATH"))
 
-OUTPUT_DIR_EXTRACTED = add_cwd_to_file_path(getenv("OUTPUT_DIR_EXTRACTED"))
-OUTPUT_DIR_TRANSFORMED = add_cwd_to_file_path(getenv("OUTPUT_DIR_TRANSFORMED"))
-DB_PATH = add_cwd_to_file_path(getenv("DB_PATH"))
+OUTPUT_DIR_EXTRACTED = io_utils.add_cwd_to_file_path(getenv("OUTPUT_DIR_EXTRACTED"))
+OUTPUT_DIR_TRANSFORMED = io_utils.add_cwd_to_file_path(getenv("OUTPUT_DIR_TRANSFORMED"))
+DB_PATH = getenv("DB_PATH")
